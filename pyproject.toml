@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "records-management-budget"
+version = "0.1.0"
+description = "기록물관리 예산 현황 대시보드"
+authors = ["Your Name <your.email@example.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = ">=3.12,<3.13"
+streamlit = "1.31.1"
+pandas = "2.2.0"
+plotly = "5.18.0"
+numpy = "1.26.0"
+openpyxl = "3.1.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry.scripts]
+app = "src.app:main" 
