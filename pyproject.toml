@@ -4,7 +4,6 @@ version = "0.1.0"
 description = "기록물관리 예산 현황 대시보드"
 authors = ["Your Name <your.email@example.com>"]
 readme = "README.md"
-packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
 python = ">=3.12,<3.13"
@@ -13,10 +12,15 @@ pandas = "2.2.0"
 plotly = "5.18.0"
 numpy = "1.26.0"
 openpyxl = "3.1.2"
+folium = "0.15.1"
+streamlit-folium = "0.17.0"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-app = "src.app:main" 
+app = "app:main"
+
+[tool.poetry.dev-dependencies]
+pytest = "^7.0" 

@@ -4,6 +4,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
+env/
 build/
 develop-eggs/
 dist/
@@ -21,9 +22,6 @@ wheels/
 *.egg
 
 # Virtual Environment
-.env
-.venv
-env/
 venv/
 ENV/
 
@@ -34,10 +32,10 @@ ENV/
 *.swo
 
 # Streamlit
-.streamlit/
+.streamlit/secrets.toml
 
-# Poetry
-poetry.lock
+# Project specific
+config/auth.yaml
 
 # OS
 .DS_Store
