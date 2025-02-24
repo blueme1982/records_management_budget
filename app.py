@@ -14,23 +14,19 @@ st.set_page_config(
     layout="wide"
 )
 
-# 사용자 인증 설정 파일 로드
-@st.cache_data
-def load_config():
-    try:
-        config_path = Path(__file__).parent / "config" / "auth.yaml"
-        if not config_path.exists():
-            return {"users": {}}
-        
-        with open(config_path, 'r', encoding='utf-8') as f:
-            return yaml.safe_load(f)
-    except Exception as e:
-        st.error(f"설정 파일 로드 중 오류가 발생했습니다: {str(e)}")
-        return {"users": {}}
-
 # 비밀번호 해시 함수
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
+
+# 로그인 검증 함수
+def verify_login(username: str, password: str) -> bool:
+    try:
+        if username in st.secrets["users"]:
+            return st.secrets["users"][username] == hash_password(password)
+        return False
+    except Exception as e:
+        st.error(f"로그인 검증 중 오류 발생: {str(e)}")
+        return False
 
 # 로그인 상태 초기화
 if 'authenticated' not in st.session_state:
@@ -98,16 +94,13 @@ def main():
 def login_page():
     st.title("🔐 로그인")
     
-    config = load_config()
-    users = config.get('users', {})
-    
     with st.form("login_form"):
         username = st.text_input("아이디")
         password = st.text_input("비밀번호", type="password")
         submitted = st.form_submit_button("로그인")
         
         if submitted:
-            if username in users and users[username] == hash_password(password):
+            if verify_login(username, password):
                 st.session_state.authenticated = True
                 st.session_state.login_time = datetime.now()
                 st.session_state.username = username
