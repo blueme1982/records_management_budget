@@ -18,18 +18,9 @@ st.set_page_config(
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
 
-# 테스트용 해시값 출력
-st.write("Test hash for 'admin':", hash_password('admin'))
-st.write("Test hash for '123456':", hash_password('123456'))
-
 # 로그인 검증 함수
 def verify_login(username: str, password: str) -> bool:
     try:
-        # 디버깅을 위한 정보 출력
-        st.write("Available secrets:", st.secrets)
-        st.write("Trying to login with username:", username)
-        st.write("Input password hash:", hash_password(password))
-        
         if "users" not in st.secrets:
             st.error("사용자 정보가 설정되지 않았습니다.")
             return False
@@ -40,9 +31,6 @@ def verify_login(username: str, password: str) -> bool:
             
         stored_hash = st.secrets.users[username]
         input_hash = hash_password(password)
-        
-        st.write("Stored hash:", stored_hash)
-        st.write("Input hash:", input_hash)
         
         return stored_hash == input_hash
     except Exception as e:
