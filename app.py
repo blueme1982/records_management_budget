@@ -18,6 +18,10 @@ st.set_page_config(
 def hash_password(password: str) -> str:
     return hashlib.sha256(password.encode()).hexdigest()
 
+# 테스트용 해시값 출력
+st.write("Test hash for 'admin':", hash_password('admin'))
+st.write("Test hash for '123456':", hash_password('123456'))
+
 # 로그인 검증 함수
 def verify_login(username: str, password: str) -> bool:
     try:
