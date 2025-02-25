@@ -243,17 +243,12 @@ with budget_tab:
         z='사업수',
         title='사업 유형별 예산 규모 분포',
         color_continuous_scale='RdYlBu_r',
-        labels={'사업수': '사업 수'}
+        labels={'사업수': '사업 수'},
+        height=720
     )
     
-    # 레이아웃 설정
-    fig_budget_dist.update_layout(
-        dict(
-            height=720,
-            font_family="Pretendard",
-            xaxis=dict(tickangle=45)
-        )
-    )
+    # x축 레이블 각도 조정
+    fig_budget_dist.update_xaxes(tickangle=45)
     
     st.plotly_chart(fig_budget_dist, use_container_width=True)
 
@@ -276,18 +271,13 @@ with org_tab:
         org_type_pref,
         title='기관 유형별 사업 유형 선호도',
         color_continuous_scale='viridis',
-        aspect='auto'
+        aspect='auto',
+        height=720
     )
     
-    # 레이아웃 설정
-    fig_org_pref.update_layout(
-        dict(
-            height=720,
-            xaxis_title="사업 유형",
-            yaxis_title="기관 유형",
-            font=dict(family="Pretendard")
-        )
-    )
+    # 축 제목 설정
+    fig_org_pref.update_xaxes(title_text="사업 유형")
+    fig_org_pref.update_yaxes(title_text="기관 유형")
     
     st.plotly_chart(fig_org_pref, use_container_width=True)
     
@@ -454,18 +444,13 @@ with org_compare_tab:
         budget_ratio_pivot,
         title='기관 유형별 사업 유형 예산 비중 (%)',
         color_continuous_scale='viridis',
-        aspect='auto'
+        aspect='auto',
+        height=720
     )
     
-    # 레이아웃 설정
-    fig_budget_ratio.update_layout(
-        dict(
-            height=720,
-            xaxis_title="사업 유형",
-            yaxis_title="기관 유형",
-            font=dict(family="Pretendard")
-        )
-    )
+    # 축 제목 설정
+    fig_budget_ratio.update_xaxes(title_text="사업 유형")
+    fig_budget_ratio.update_yaxes(title_text="기관 유형")
     
     st.plotly_chart(fig_budget_ratio, use_container_width=True)
     
