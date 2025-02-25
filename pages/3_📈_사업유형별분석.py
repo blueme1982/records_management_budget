@@ -243,17 +243,17 @@ with budget_tab:
         z='사업수',
         title='사업 유형별 예산 규모 분포',
         color_continuous_scale='RdYlBu_r',
-        labels={'사업수': '사업 수'},
-        height=720
+        labels={'사업수': '사업 수'}
     )
     
     # 레이아웃 설정
     fig_budget_dist.update_layout(
-        font_family="Pretendard"
+        dict(
+            height=720,
+            font_family="Pretendard",
+            xaxis=dict(tickangle=45)
+        )
     )
-    
-    # x축 레이블 각도 조정
-    fig_budget_dist.update_xaxes(tickangle=45)
     
     st.plotly_chart(fig_budget_dist, use_container_width=True)
 
@@ -281,10 +281,12 @@ with org_tab:
     
     # 레이아웃 설정
     fig_org_pref.update_layout(
-        height=720,
-        xaxis_title="사업 유형",
-        yaxis_title="기관 유형",
-        font=dict(family="Pretendard")
+        dict(
+            height=720,
+            xaxis_title="사업 유형",
+            yaxis_title="기관 유형",
+            font=dict(family="Pretendard")
+        )
     )
     
     st.plotly_chart(fig_org_pref, use_container_width=True)
@@ -455,11 +457,14 @@ with org_compare_tab:
         aspect='auto'
     )
     
+    # 레이아웃 설정
     fig_budget_ratio.update_layout(
-        height=720,
-        xaxis_title="사업 유형",
-        yaxis_title="기관 유형",
-        font=dict(family="Pretendard")
+        dict(
+            height=720,
+            xaxis_title="사업 유형",
+            yaxis_title="기관 유형",
+            font=dict(family="Pretendard")
+        )
     )
     
     st.plotly_chart(fig_budget_ratio, use_container_width=True)
