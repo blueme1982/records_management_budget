@@ -165,6 +165,7 @@ with col1:
         title='사업 유형별 예산 분포',
         color_set=st.session_state.chart_settings['color_set']
     )
+    fig_budget.update_layout(height=720)
     st.plotly_chart(fig_budget, use_container_width=True)
 
 with col2:
@@ -176,6 +177,7 @@ with col2:
         title='사업 유형별 사업 수 분포',
         color_set=st.session_state.chart_settings['color_set']
     )
+    fig_projects.update_layout(height=720)
     st.plotly_chart(fig_projects, use_container_width=True)
 
 st.markdown("---")
@@ -200,6 +202,7 @@ with budget_tab:
         color_set=st.session_state.chart_settings['color_set'],
         hover_mode='budget'
     )
+    fig_budget_scale.update_layout(height=720)
     st.plotly_chart(fig_budget_scale, use_container_width=True)
     
     # 예산 규모별 분포
@@ -240,43 +243,17 @@ with budget_tab:
         z='사업수',
         title='사업 유형별 예산 규모 분포',
         color_continuous_scale='RdYlBu_r',
-        labels={'사업수': '사업 수'}
+        labels={'사업수': '사업 수'},
+        height=720
     )
     
     # 레이아웃 설정
     fig_budget_dist.update_layout(
-        height=500,
-        margin=dict(t=50, b=50, l=50, r=50),
-        title_x=0.5,
-        font=dict(
-            family="Pretendard",
-            size=12
-        )
+        font_family="Pretendard"
     )
     
-    # 축 설정
-    fig_budget_dist.update_xaxes(
-        title="사업 유형",
-        tickangle=45,
-        title_font=dict(size=12),
-        tickfont=dict(size=11)
-    )
-    
-    fig_budget_dist.update_yaxes(
-        title="예산 구간",
-        title_font=dict(size=12),
-        tickfont=dict(size=11)
-    )
-    
-    # 컬러바 설정
-    fig_budget_dist.update_traces(
-        colorbar=dict(
-            title="사업 수",
-            titleside="right",
-            tickfont=dict(size=11),
-            titlefont=dict(size=12)
-        )
-    )
+    # x축 레이블 각도 조정
+    fig_budget_dist.update_xaxes(tickangle=45)
     
     st.plotly_chart(fig_budget_dist, use_container_width=True)
 
@@ -304,7 +281,7 @@ with org_tab:
     
     # 레이아웃 설정
     fig_org_pref.update_layout(
-        height=400,
+        height=720,
         xaxis_title="사업 유형",
         yaxis_title="기관 유형",
         font=dict(family="Pretendard")
@@ -350,7 +327,7 @@ with org_tab:
     
     # 레이아웃 설정
     fig_region_dist.update_layout(
-        height=600,
+        height=720,
         xaxis_title="지역",
         yaxis_title="사업 유형",
         font=dict(family="Pretendard"),
@@ -390,6 +367,7 @@ with type_compare_tab:
             color_set=st.session_state.chart_settings['color_set'],
             hover_mode='budget'
         )
+        fig_budget_compare.update_layout(height=720)
         st.plotly_chart(fig_budget_compare, use_container_width=True)
         
         # 2. 사업 현황 비교
@@ -406,6 +384,7 @@ with type_compare_tab:
                 text=compare_type_df['평균예산액'].apply(lambda x: f'₩{x:,.1f}'),
                 color_set=st.session_state.chart_settings['color_set']
             )
+            fig_avg_compare.update_layout(height=720)
             st.plotly_chart(fig_avg_compare, use_container_width=True)
         
         with col2:
@@ -418,6 +397,7 @@ with type_compare_tab:
                 text=compare_type_df['수행기관수'].apply(lambda x: f'{x}개'),
                 color_set=st.session_state.chart_settings['color_set']
             )
+            fig_org_compare.update_layout(height=720)
             st.plotly_chart(fig_org_compare, use_container_width=True)
         
         # 3. 상세 비교 테이블
@@ -476,7 +456,7 @@ with org_compare_tab:
     )
     
     fig_budget_ratio.update_layout(
-        height=400,
+        height=720,
         xaxis_title="사업 유형",
         yaxis_title="기관 유형",
         font=dict(family="Pretendard")
