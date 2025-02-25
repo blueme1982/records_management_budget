@@ -98,8 +98,14 @@ for tab, project_type in zip(tabs, project_types):
         # 예산액 기준 상위 10개 기관 선택
         top10_orgs = top10_orgs.nlargest(10, 'budget_amount')
         
-        # 기관명에 상급기관 정보 추가 (제거)
+        # 기관명 설정 (차트용)
         top10_orgs['organization_full'] = top10_orgs['organization']
+        
+        # 호버 텍스트 설정
+        hover_text = top10_orgs.apply(
+            lambda x: f"기관명: {x['organization']}<br>상급기관: {x['parent_org'] if pd.notna(x['parent_org']) else '없음'}<br>예산액: ₩{x['budget_amount']:,.0f}",
+            axis=1
+        )
         
         # 1. 주요 지표
         col1, col2, col3 = st.columns(3)
@@ -140,12 +146,13 @@ for tab, project_type in zip(tabs, project_types):
             title=f'{project_type} 예산 규모 상위 10개 기관',
             text=top10_orgs['budget_amount'].apply(lambda x: f'₩{x:,.0f}'),
             color_set=st.session_state.chart_settings['color_set'],
-            hover_mode='budget'
+            hover_mode='budget',
+            hovertext=hover_text
         )
         
         # 차트 레이아웃 설정 추가
         fig.update_layout(
-            height=800,  # 높이를 800으로 증가
+            height=720,  # 높이를 720으로 변경
             margin=dict(t=100, b=150, l=100, r=50),  # 여백 조정
             xaxis_tickangle=-45,  # x축 레이블 각도 조정
             yaxis_title="예산액",  # y축 제목 추가

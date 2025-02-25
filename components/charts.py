@@ -241,6 +241,9 @@ class BarChart(BaseChart):
         y: str,
         title: str,
         color_set: str = 'primary',
+        text: pd.Series = None,
+        hover_mode: str = 'default',
+        hovertext: pd.Series = None,
         **kwargs
     ) -> go.Figure:
         """기본 막대 그래프를 생성합니다."""
@@ -255,26 +258,29 @@ class BarChart(BaseChart):
                 colors = colors * (len(df) // len(colors) + 1)
                 colors = colors[:len(df)]
         
-        # 데이터 추가
-        hover_mode = kwargs.get('hover_mode', 'default')
-        if hover_mode == 'budget':
-            customdata = list(zip(
-                (df[y] / df[y].sum() * 100).round(1),
-                df.get('사업수', [0] * len(df))
-            ))
-            hovertemplate = EnhancedTooltips.get_budget_tooltip()
-        elif hover_mode == 'count':
-            avg_budget = df.get('예산액', df[y] * 0).div(df[y])
-            customdata = avg_budget
-            hovertemplate = EnhancedTooltips.get_project_tooltip()
+        # 호버 템플릿 설정
+        if hovertext is not None:
+            hovertemplate = "%{hovertext}<extra></extra>"
         else:
-            customdata = None
-            hovertemplate = BaseChart.get_hover_template(hover_mode)
+            if hover_mode == 'budget':
+                customdata = list(zip(
+                    (df[y] / df[y].sum() * 100).round(1),
+                    df.get('사업수', [0] * len(df))
+                ))
+                hovertemplate = EnhancedTooltips.get_budget_tooltip()
+            elif hover_mode == 'count':
+                avg_budget = df.get('예산액', df[y] * 0).div(df[y])
+                customdata = avg_budget
+                hovertemplate = EnhancedTooltips.get_project_tooltip()
+            else:
+                customdata = None
+                hovertemplate = BaseChart.get_hover_template(hover_mode)
         
+        # 데이터 추가
         fig.add_trace(go.Bar(
             x=df[x],
             y=df[y],
-            text=kwargs.get('text', df[y]),
+            text=text if text is not None else df[y],
             textposition='outside',
             marker=dict(
                 color=colors,
@@ -289,8 +295,9 @@ class BarChart(BaseChart):
                 color='#F9FAFB',
                 size=13
             ),
-            customdata=customdata,
-            hovertemplate=hovertemplate
+            customdata=None if hovertext is not None else customdata,
+            hovertemplate=hovertemplate,
+            hovertext=hovertext
         ))
         
         # 레이아웃 설정
