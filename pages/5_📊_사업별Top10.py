@@ -149,10 +149,22 @@ for tab, project_type in zip(tabs, project_types):
         # 차트 레이아웃 설정 추가
         fig.update_layout(
             height=800,  # 높이를 800으로 증가
-            margin=dict(t=100, b=100),  # 상하 여백 추가
+            margin=dict(t=100, b=150, l=100, r=50),  # 여백 조정
             xaxis_tickangle=-45,  # x축 레이블 각도 조정
             yaxis_title="예산액",  # y축 제목 추가
-            showlegend=False  # 범례 숨김
+            yaxis=dict(
+                title_standoff=20,  # y축 제목과 축 사이 간격
+                automargin=True,  # 자동 여백 조정
+                tickformat=",.0f",  # 숫자 포맷팅
+            ),
+            xaxis=dict(
+                automargin=True,  # 자동 여백 조정
+            ),
+            showlegend=False,  # 범례 숨김
+            uniformtext=dict(
+                mode='hide',  # 텍스트가 겹치면 숨김
+                minsize=8  # 최소 텍스트 크기
+            )
         )
         
         st.plotly_chart(fig, use_container_width=True)
