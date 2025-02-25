@@ -146,6 +146,15 @@ for tab, project_type in zip(tabs, project_types):
             hover_mode='budget'
         )
         
+        # 차트 레이아웃 설정 추가
+        fig.update_layout(
+            height=800,  # 높이를 800으로 증가
+            margin=dict(t=100, b=100),  # 상하 여백 추가
+            xaxis_tickangle=-45,  # x축 레이블 각도 조정
+            yaxis_title="예산액",  # y축 제목 추가
+            showlegend=False  # 범례 숨김
+        )
+        
         st.plotly_chart(fig, use_container_width=True)
         
         # 3. 상세 데이터 테이블
