@@ -246,21 +246,37 @@ with budget_tab:
     # 레이아웃 설정
     fig_budget_dist.update_layout(
         height=500,
-        xaxis_title="사업 유형",
-        yaxis_title="예산 구간",
+        margin=dict(t=50, b=50, l=50, r=50),
+        title_x=0.5,
         font=dict(
             family="Pretendard",
             size=12
-        ),
-        coloraxis_colorbar=dict(
+        )
+    )
+    
+    # 축 설정
+    fig_budget_dist.update_xaxes(
+        title="사업 유형",
+        tickangle=45,
+        title_font=dict(size=12),
+        tickfont=dict(size=11)
+    )
+    
+    fig_budget_dist.update_yaxes(
+        title="예산 구간",
+        title_font=dict(size=12),
+        tickfont=dict(size=11)
+    )
+    
+    # 컬러바 설정
+    fig_budget_dist.update_traces(
+        colorbar=dict(
             title="사업 수",
+            titleside="right",
             tickfont=dict(size=11),
             titlefont=dict(size=12)
         )
     )
-    
-    # 축 레이블 각도 조정
-    fig_budget_dist.update_xaxes(tickangle=45)
     
     st.plotly_chart(fig_budget_dist, use_container_width=True)
 
