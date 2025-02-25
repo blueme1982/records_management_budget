@@ -98,11 +98,8 @@ for tab, project_type in zip(tabs, project_types):
         # 예산액 기준 상위 10개 기관 선택
         top10_orgs = top10_orgs.nlargest(10, 'budget_amount')
         
-        # 기관명에 상급기관 정보 추가
-        top10_orgs['organization_full'] = top10_orgs.apply(
-            lambda x: f"{x['organization']} ({x['parent_org']})" if pd.notna(x['parent_org']) else x['organization'],
-            axis=1
-        )
+        # 기관명에 상급기관 정보 추가 (제거)
+        top10_orgs['organization_full'] = top10_orgs['organization']
         
         # 1. 주요 지표
         col1, col2, col3 = st.columns(3)
